@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { User } from '../types';
+import { User, ApplicationStatus } from '../types';
 
 interface AuthModalProps {
   onClose: () => void;
@@ -15,16 +15,52 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
 
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock authentication
     const mockUser: User = {
       id: 'u1',
-      name: name || 'Sri Lankan Student',
-      email: email || 'student@uom.lk',
+      name: name || 'Ayesha Perera',
+      email: email || 'ayesha.p@university.lk',
       university: 'University of Moratuwa',
-      bio: 'Final year IT undergraduate passionate about Cloud and AI.',
-      skills: ['React', 'Node.js', 'AWS', 'Python'],
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email || 'default'}`,
-      role: 'student'
+      bio: 'Final year undergraduate passionate about sustainable engineering and management. Highly motivated to bridge the gap between technical design and business strategy.',
+      skills: ['Project Management', 'Data Analysis', 'AutoCAD', 'Leadership', 'React', 'TypeScript'],
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email || 'ayesha'}`,
+      role: 'student',
+      languages: ['Sinhala (Native)', 'English (Professional)', 'Tamil (Basic)'],
+      experience: [
+        {
+          id: 'exp1',
+          role: 'Summer Engineering Intern',
+          company: 'Access Engineering PLC',
+          duration: 'June 2023 - Sept 2023',
+          description: 'Assisted in site management for a major bridge project. Developed progress reports and coordinated with multiple sub-contractors.'
+        }
+      ],
+      education: [
+        {
+          id: 'edu1',
+          degree: 'B.Sc. (Hons) in Civil Engineering',
+          institution: 'University of Moratuwa',
+          year: '2020 - 2024 (Expected)',
+          gpa: '3.82'
+        }
+      ],
+      projects: [
+        {
+          id: 'proj1',
+          title: 'Smart City Traffic Management System',
+          description: 'A data-driven approach to reducing congestion in Colombo 07 using real-time sensor integration.'
+        }
+      ],
+      applications: [
+        {
+          id: 'app1',
+          jobId: '1',
+          jobTitle: 'Management Trainee - Banking',
+          companyName: 'Commercial Bank',
+          companyLogo: 'https://picsum.photos/seed/combank/100/100',
+          status: ApplicationStatus.INTERVIEWING,
+          appliedAt: '2024-05-15'
+        }
+      ]
     };
     onLogin(mockUser);
     onClose();
@@ -42,79 +78,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
               </svg>
             </button>
           </div>
-
-          <h2 className="text-3xl font-black text-slate-900 mb-2">
-            {isLogin ? 'Welcome Back' : 'Get Started'}
-          </h2>
-          <p className="text-slate-500 mb-8">
-            {isLogin ? 'Sign in to continue your career journey.' : 'Create an account to build your professional profile.'}
-          </p>
-
+          <h2 className="text-3xl font-black text-slate-900 mb-2">{isLogin ? 'Welcome Back' : 'Get Started'}</h2>
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && (
-              <div>
-                <input 
-                  type="text" 
-                  placeholder="Full Name" 
-                  required
-                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
+              <input type="text" placeholder="Full Name" required className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" value={name} onChange={e => setName(e.target.value)} />
             )}
-            <div>
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                required
-                className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <input 
-                type="password" 
-                placeholder="Password" 
-                required
-                className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <button 
-              type="submit"
-              className="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-700 active:scale-[0.98] transition-all mt-4"
-            >
-              {isLogin ? 'Sign In' : 'Create Account'}
-            </button>
+            <input type="email" placeholder="Email Address" required className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" value={email} onChange={e => setEmail(e.target.value)} />
+            <input type="password" placeholder="Password" required className="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" value={password} onChange={e => setPassword(e.target.value)} />
+            <button type="submit" className="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-700 active:scale-[0.98] transition-all mt-4">{isLogin ? 'Sign In' : 'Create Account'}</button>
           </form>
-
-          <div className="mt-8 flex items-center gap-4">
-            <div className="flex-1 h-px bg-slate-100"></div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Or continue with</span>
-            <div className="flex-1 h-px bg-slate-100"></div>
-          </div>
-
-          <div className="mt-6 flex gap-4">
-            <button className="flex-1 py-3 border border-slate-100 rounded-2xl flex items-center justify-center hover:bg-slate-50 transition-colors">
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-5 h-5" alt="Google" />
-            </button>
-            <button className="flex-1 py-3 border border-slate-100 rounded-2xl flex items-center justify-center hover:bg-slate-50 transition-colors">
-              <img src="https://www.svgrepo.com/show/448234/linkedin.svg" className="w-5 h-5" alt="LinkedIn" />
-            </button>
-          </div>
-
           <p className="mt-8 text-center text-sm text-slate-500 font-medium">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <button 
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-blue-600 font-bold hover:underline"
-            >
-              {isLogin ? 'Sign Up' : 'Log In'}
-            </button>
+            <button onClick={() => setIsLogin(!isLogin)} className="text-blue-600 font-bold hover:underline">{isLogin ? 'Sign Up' : 'Log In'}</button>
           </p>
         </div>
       </div>

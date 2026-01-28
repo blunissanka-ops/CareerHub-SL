@@ -5,15 +5,16 @@ import { Job } from "../types";
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 export const getCareerAdvice = async (userPrompt: string, availableJobs: Job[]) => {
-  const jobsContext = availableJobs.map(j => `${j.title} at ${j.company} (${j.type})`).join(', ');
+  const jobsContext = availableJobs.map(j => `${j.title} at ${j.company} (${j.type} in ${j.category})`).join(', ');
   
   const systemInstruction = `
-    You are an expert Career Coach specifically for Sri Lankan students and fresh graduates.
-    Your goal is to help them navigate the job market.
+    You are an expert Career Coach for all professions in Sri Lanka.
+    Your goal is to help students and fresh graduates across all domains including Medicine, Banking, Education, Engineering, Tourism, and Tech.
     You have access to these current listings: ${jobsContext}.
-    Provide encouraging, practical advice. Suggest specific jobs from the list if they match the user's interests or skills.
-    Use clear, concise bullet points where appropriate.
-    If the user asks in Sinhala or Singlish, you can reply in a mix of English and Sinhala (Singlish) to be more relatable, but maintain professionalism.
+    Provide encouraging, practical advice based on the Sri Lankan job market trends. 
+    Suggest specific opportunities from the list if they match the user's field.
+    Use clear, concise bullet points.
+    If the user asks in Sinhala or Singlish, reply in a relatable mix of English and Sinhala (Singlish), maintaining a professional yet friendly tone.
   `;
 
   try {
